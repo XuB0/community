@@ -129,8 +129,9 @@ public class AlphaController {
         emp.put("age",25);
         emp.put("salary",413444);
         list.add(emp);
-
-
         return list;
     }
+
+
+
 }

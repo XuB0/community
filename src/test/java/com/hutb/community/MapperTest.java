@@ -2,8 +2,10 @@ package com.hutb.community;
 
 
 import com.hutb.community.dao.DiscussPostMapper;
+import com.hutb.community.dao.LoginTicketMapper;
 import com.hutb.community.dao.UserMapper;
 import com.hutb.community.entity.DiscussPost;
+import com.hutb.community.entity.LoginTicket;
 import com.hutb.community.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class MapperTest {
 
     @Autowired
     private DiscussPostMapper postMapper;
+
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
 
     @Test
     public void testSelectUser(){
@@ -66,5 +71,31 @@ public class MapperTest {
         System.out.println(rows);
     }
 
+
+    //测试
+    @Test
+    public void testDemo(){
+        String a = "xubo";
+        System.out.println(a.getBytes());
+    }
+
+    @Test
+    public void testInsertLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setTicket("acbdafdlgad");
+        loginTicket.setStatus(0);
+        loginTicket.setUserId(11);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000*60*10));
+        loginTicketMapper.insertLoginTicket(loginTicket);
+    }
+
+    @Test
+    public void testUpdateTicketStatus(){
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket("acbdafdlgad");
+        System.out.println(loginTicket);
+        loginTicketMapper.updateStatus("acbdafdlgad",1);
+        loginTicket =loginTicketMapper.selectByTicket("acbdafdlgad");
+        System.out.println(loginTicket);
+    }
 
 }
