@@ -161,4 +161,9 @@ public class UserService implements CommunityConstant {
 
     }
 
+    //根据cookie中的ticket查询 login_ticket表中的数据
+    public LoginTicket findLoginTicket(String ticket){
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
 }
