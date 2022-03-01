@@ -98,4 +98,8 @@ public class MapperTest {
         System.out.println(loginTicket);
     }
 
+    @Test
+    public void testD(){
+        System.out.println(new Date(System.currentTimeMillis() + 24*3600*1000));
+    }
 }
