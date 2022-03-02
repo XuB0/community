@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -96,6 +97,28 @@ public class UserController {
         }catch (IOException e){
             logger.error("读取头像失败： "+e.getMessage());
         }
+    }
+
+
+    @RequestMapping(path = "/updatePassword",method = RequestMethod.POST)
+    public String updatePassword(String oldPassword, String newPassword, String newPassword2, Model model){
+        User user = hostHolder.getUser();
+        String originPD = CommunityUtil.md5(oldPassword + user.getSalt());
+        if (!newPassword.equals(newPassword2)){
+            model.addAttribute("notSame","两次密码不一致！");
+            return "/site/setting";
+        }
+        if (!originPD.equals(user.getPassword())){
+            model.addAttribute("opdError","原密码输入错误！");
+            return "/site/setting";
+        }
+        if (CommunityUtil.md5(newPassword + user.getSalt()).equals(user.getPassword())){
+            model.addAttribute("npdError","不能和原密码相同！");
+            return "/site/setting";
+        }
+        String password = CommunityUtil.md5(newPassword + user.getSalt());
+        userService.updatePassword(user.getId(), password);
+        return "redirect:/logout";
     }
 
 }
