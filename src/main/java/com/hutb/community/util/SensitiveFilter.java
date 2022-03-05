@@ -96,7 +96,7 @@ public class SensitiveFilter {
                 //重新指向根节点
                 tempNode = rootNode;
             }else if (tempNode.isKeywordEnd()){
-                //发现敏感词，将begin-position字符串替换
+                //发现敏感词
                 sb.append(REPLACEMENT);
                 //进入下一个位置
                 begin = ++position;
